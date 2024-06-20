@@ -170,5 +170,9 @@ cython_debug/
 # Windows
 Thumbs.db
 
+<<<<<<< HEAD
 data/raw/chest_xray/
 data/raw/chest-xray-pneumonia.zip
+=======
+data/raw/chest_xray/
+>>>>>>> a88bc699ae8a28fb413da7ab6874544287e2fe3f
