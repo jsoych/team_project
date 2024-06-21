@@ -13,7 +13,7 @@ test_df = pd.read_csv("data/processed/data_1/test_data_1.csv")
 print(test_df.head())
 
 # the following separates our training data (train_df) into response and
-# explanatory variables, X and Y respectively
+# explanatory variables, Y and X respectively
 train_data = (train_df.to_numpy()).transpose()
 X = train_data[:-1]
 Y = train_data[-1]
