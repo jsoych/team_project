@@ -20,6 +20,7 @@ print(test_df.head())
 train_data = train_df.to_numpy()
 Y = train_data[:,-1]
 X = train_data[:,:-1]
+X = sm.tools.tools.add_constant(X)
 
 # the following defines and fits the logistic regression model with our
 # training data
@@ -35,6 +36,7 @@ logit_res = logit_mod.fit(
 test_data = test_df.to_numpy()
 Y_test = test_data[:,-1]
 X_test = test_data[:,:-1]
+X_test = sm.tools.tools.add_constant(X_test)
 
 # the following scores our model againts the test data
 Y_pred = logit_mod.predict(logit_res.params,X_test)
