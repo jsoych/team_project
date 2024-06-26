@@ -1,22 +1,18 @@
-Our team decided to tackle a healthcare-related project by selecting a dataset from Kaggle that consisted of chest X-ray images. Our aim was to develop an image classifier specifically designed to identify pneumonia from these X-rays. Pneumonia, an inflammatory condition of the lungs caused by various pathogens, was the target for classification in our study. The dataset was split into training and testing sets, processed the data accordingly, and proceeded to build a logistic regression model for our analysis.
+Ran the python script for logistic regression and got the following:
 
-Project Overview
-The dataset we used from Kaggle was a collection of chest X-ray scans. Our initial goal was to train a machine learning model to correctly categorize these photos as pneumonia-positive or pneumonia-negative using logistic regression.
 
-Approach
-Dataset Handling: The dataset was divided into two main subsets:
-Training Set: Used to train our logistic regression model. 
-Testing Set:
-Model Development: We processed the data to ensure that it was appropriate for training. Our primary focus was on creating a logistic regression model because of its simplicity and interpretability, which are critical in medical settings.
-Evaluation:
+precision    recall  f1-score   support
 
-Team Dynamics and Collaboration
-Our team consisted of members who collaborated to tackle a healthcare-related project focused on pneumonia detection using chest X-ray images from Kaggle. Throughout the project, we emphasized effective communication and coordinated efforts to achieve our goals.
+           0       0.96      0.53      0.69       234
+           1       0.78      0.99      0.87       390
 
-Approach and Execution
-We began the study by having two dataset: training and testing sets, prepping it for analysis, and developing a logistic regression model for pneumonia classification.
+    accuracy                           0.82       624
+   macro avg       0.87      0.76      0.78       624
+weighted avg       0.85      0.82      0.80       624
 
-Challenges and Learnings
+AUC-ROC: 0.9367959675651983
 
-Conclusion
-Finally, our project attempted to use machine learning approaches to automate pneumonia detection using image analysis. We hoped to contribute to the advancement of healthcare technology by focusing on logistic regression and employing a curated dataset for medical picture categorization.
+![Confusion_Matrix](https://github.com/jsoych/team_project/assets/35706356/b838b06d-f30d-45ec-bba3-ad1509034d20)
+
+![ROC_Curve](https://github.com/jsoych/team_project/assets/35706356/51d05049-5b57-43b0-83fb-830897ee81f2)
+
