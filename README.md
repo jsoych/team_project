@@ -36,7 +36,7 @@ Finally, our project attempted to use machine learning approaches to automate pn
 
 **Team members Reflections and Insights**
 ---
-Team Member 1: (Insert link to video) 
+John Soychak: https://youtu.be/pMBDIsxf26M
 
 Team Member 2: (Insert link to video) 
 
