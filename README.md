@@ -13,7 +13,8 @@ Our team consisted of members who collaborated to tackle a healthcare-related pr
 Dataset Handling: The dataset was divided into two main subsets:
 - Training Set: Used to train our logistic regression model. 
 - Testing Set: Used for evaluating the model's performance
-- Feature Engineering: Used pre-trained models to engineer features 
+- Feature Engineering: Used pre-trained models to engineer features
+  
 Model Development: We processed the data to ensure that it was appropriate for training. Our primary focus was on creating a logistic regression model because of its simplicity and interpretability, which are critical in medical settings.
 
 **Evaluation**
