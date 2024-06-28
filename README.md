@@ -1,4 +1,4 @@
-Enhancing Pneumonia Detection from Chest X-ray Images Using Logistic Regression: A Collaborative Approach
+**Enhancing Pneumonia Detection from Chest X-ray Images Using Logistic Regression: A Collaborative Approach**
 
 **Project Overview**
 Our team decided to tackle a healthcare-related project by selecting a dataset from Kaggle that consisted of chest X-ray images. Our aim was to develop an image classifier specifically designed to identify pneumonia from these X-rays. Pneumonia, an inflammatory condition of the lungs caused by various pathogens, was the target for classification in our study. The dataset was split into training and testing sets, processed the data accordingly, and proceeded to build a logistic regression model for our analysis.
