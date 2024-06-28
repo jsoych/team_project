@@ -30,7 +30,7 @@ Comparing the performance of these models reveals critical insights. With a basi
 Finally, our project attempted to use machine learning approaches to automate pneumonia detection using image analysis. We hoped to contribute to the advancement of healthcare technology by focusing on logistic regression and employing a curated dataset for medical picture categorization.
 
 **Team members Reflections and Insights**
-#
+---
 Team Member 1: (Insert link to video) 
 Team Member 2: (Insert link to video) 
 Team Member 3: (Insert link to video) 
