@@ -1,13 +1,18 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
+from dotenv import load_dotenv
 from sklearn import metrics
 
 
-train_df_2 = pd.read_csv("data/processed/data_2/train_data_2.csv")
+load_dotenv()
+data_dir = os.getenv("PROCESSED_DATA_DIR")
+
+train_df_2 = pd.read_csv(os.path.join(data_dir, "data_2/train_data.csv"))
 print(train_df_2.head())
 
-test_df_2 = pd.read_csv("data/processed/data_2/test_data_2.csv")
+test_df_2 = pd.read_csv(os.path.join(data_dir, "data_2/test_data.csv"))
 print(test_df_2.head())
 
 # Prepare training data
