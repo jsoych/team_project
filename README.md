@@ -14,7 +14,7 @@ Data_2 AUC = 0.94: An AUC of 0.94 in the subsequent study indicated a considerab
 Data_3 AUC = 0.74. An further test of the dataset produced an AUC of 0.74, confirming the model's reliable performance across various data splits. This consistency shows that, despite changes in the dataset, the model's performance is consistent and dependable.
 
 Team Dynamics and Collaboration
-Our team consisted of members who collaborated to tackle a healthcare-related project focused on pneumonia detection using chest X-ray images from Kaggle. Throughout the project, we emphasized effective communication and coordinated efforts to achieve our goals.
+Our team consisted of members who collaborated to tackle a healthcare-related project focused on pneumonia detection using chest X-ray images from Kaggle. Throughout the project, we emphasized effective communication and coordinated efforts to achieve our goals.We followed an organized set of engagement principles known as Five High5, which effectively led our collaboration and communication over the project. These rules included emphasizing presence, assuming positive intent, owning our voices during meetings, proposing problem-solving solutions, and viewing mistakes as learning opportunities. By adhering to these rules, we created a collaborative environment conducive to our goal of constructing a logistic regression model for pneumonia classification.
 
 Approach and Execution
 We began the study by having two dataset: training and testing sets, prepping it for analysis, and developing a logistic regression model for pneumonia classification.
