@@ -20,7 +20,9 @@ Model Development: We processed the data to ensure that it was appropriate for t
 **Evaluation**
 ---
 Data_1 AUC = 0.73: The initial set of engineered features can be found in this collection. After training on Data_1, the logistic regression model's AUC was 0.73. This demonstrates how well it performed with the first set of designed features for identifying pneumonia-positive and pneumonia-negative cases.
+
 Data_2 AUC = 0.94: A later set of designed traits is represented by this dataset. AUC of 0.94 was higher for the logistic regression model trained on Data_2. This implies that, in comparison to Data_1, the features built in Data_2 greatly enhanced the model's capacity to distinguish between pneumonia patients and non-pneumonia cases.
+
 Data_3 AUC = 0.74. The logistic regression model trained on Data_3 achieved an AUC of 0.74. This indicates its performance level with the third set of engineered features, showing consistency but potentially not as impactful as Data_2.
 
 **Discussion**
