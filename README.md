@@ -1,4 +1,4 @@
-**Enhancing Pneumonia Detection from Chest X-ray Images Using Logistic Regression: A Collaborative Approach**
+#Enhancing Pneumonia Detection from Chest X-ray Images Using Logistic Regression: A Collaborative Approach#
 
 **Project Overview**
 ---
