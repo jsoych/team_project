@@ -38,7 +38,7 @@ Finally, our project attempted to use machine learning approaches to automate pn
 ---
 John Soychak: https://youtu.be/pMBDIsxf26M
 
-Team Member 2: (Insert link to video) 
+Shabiga Sahadevan: https://youtu.be/covsTJ8vPOk
 
 Team Member 3: (Insert link to video) 
 
