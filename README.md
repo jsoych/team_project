@@ -1,39 +1,47 @@
-Ran the python script for logistic regression and got the following:
+**Enhancing Pneumonia Detection from Chest X-ray Images Using Logistic Regression: A Collaborative Approach**
 
+**Project Overview**
+---
+Our team decided to tackle a healthcare-related project by selecting a dataset from Kaggle that consisted of chest X-ray images. Our aim was to develop an image classifier specifically designed to identify pneumonia from these X-rays. Pneumonia, an inflammatory condition of the lungs caused by various pathogens, was the target for classification in our study. The dataset was split into training and testing sets, processed the data accordingly, and proceeded to build a logistic regression model for our analysis.
 
-precision    recall  f1-score   support
+**Team Dynamics and Collaboration**
+---
+Our team consisted of members who collaborated to tackle a healthcare-related project focused on pneumonia detection using chest X-ray images from Kaggle. Throughout the project, we emphasized effective communication and coordinated efforts to achieve our goals. We followed an organized set of engagement principles known as Five High5, which effectively led our collaboration and communication over the project. These rules included emphasizing presence, assuming positive intent, owning our voices during meetings, proposing problem-solving solutions, and viewing mistakes as learning opportunities. By adhering to these rules, we created a collaborative environment conducive to our goal of constructing a logistic regression model for pneumonia classification.
 
-           0       0.96      0.53      0.69       234
-           1       0.78      0.99      0.87       390
+**Approach**
+---
+Dataset Handling: The dataset was divided into two main subsets:
+- Training Set: Used to train our logistic regression model. 
+- Testing Set: Used for evaluating the model's performance
 
-    accuracy                           0.82       624
-   macro avg       0.87      0.76      0.78       624
-weighted avg       0.85      0.82      0.80       624
+Feature Engineering: Used pre-trained models to engineer features
+  
+Model Development: We processed the data to ensure that it was appropriate for training. Our primary focus was on creating a logistic regression model because of its simplicity and interpretability, which are critical in medical settings.
 
-AUC-ROC: 0.9367959675651983
+**Evaluation**
+---
+Data_1 AUC = 0.73: The initial set of engineered features can be found in this collection. After training on Data_1, the logistic regression model's AUC was 0.73. This demonstrates how well it performed with the first set of designed features for identifying pneumonia-positive and pneumonia-negative cases.
 
-![Confusion_Matrix](https://github.com/jsoych/team_project/assets/35706356/b838b06d-f30d-45ec-bba3-ad1509034d20)
+Data_2 AUC = 0.94: A later set of designed traits is represented by this dataset. AUC of 0.94 was higher for the logistic regression model trained on Data_2. This implies that, in comparison to Data_1, the features built in Data_2 greatly enhanced the model's capacity to distinguish between pneumonia patients and non-pneumonia cases.
 
-![ROC_Curve](https://github.com/jsoych/team_project/assets/35706356/51d05049-5b57-43b0-83fb-830897ee81f2)
+Data_3 AUC = 0.74. The logistic regression model trained on Data_3 achieved an AUC of 0.74. This indicates its performance level with the third set of engineered features, showing consistency but potentially not as impactful as Data_2.
 
-Here's an interpretation of your logistic regression model's performance:
+**Discussion**
+---
+Comparing the performance of these models reveals critical insights. With a basic AUC of 0.73, Data_1 showed the early efficacy of tailored features. However, Data_2's substantial enhancement to an AUC of 0.94 highlights the significance of its features in enhancing pneumonia identification. Data_3 does not have the same discriminative capacity as Data_2, but it does keep a consistent AUC of 0.74, which strengthens consistency. With Data_2 emerging as the most successful dataset, this emphasizes the critical role that feature engineering plays in optimizing pneumonia identification from chest X-ray pictures using logistic regression. 
 
-- **Precision**: For class 0 (negative class), the precision is **0.96**, meaning that when the model predicts class 0, it is correct 96% of the time. For class 1 (positive class), the precision is **0.78**, so it's correct 78% of the time when predicting class 1.
+**Conclusion**
+---
+Finally, our project attempted to use machine learning approaches to automate pneumonia detection using image analysis. We hoped to contribute to the advancement of healthcare technology by focusing on logistic regression and employing a curated dataset for medical picture categorization.
 
-- **Recall**: The recall for class 0 is **0.53**, indicating that the model correctly identifies 53% of all actual class 0 instances. For class 1, the recall is **0.99**, which is excellent as it identifies 99% of all actual class 1 instances.
+**Team members Reflections and Insights**
+---
+John Soychak: https://youtu.be/pMBDIsxf26M
 
-- **F1-Score**: The F1-score for class 0 is **0.69**, and for class 1, it's **0.87**. The F1-score is a harmonic mean of precision and recall, providing a balance between the two. A higher F1-score indicates a better model.
+Shabiga Sahadevan: https://youtu.be/covsTJ8vPOk
 
-- **Support**: This is the number of actual occurrences of each class in your dataset. There are **234** instances of class 0 and **390** instances of class 1.
+Jose Castellanos: https://youtu.be/2cYCd_pkuBs 
 
-- **Accuracy**: The overall accuracy of the model is **0.82**, meaning it correctly predicts the outcome 82% of the time across both classes.
+Team Member 4: (Insert link to video) 
 
-- **Macro Avg**: The macro average for precision, recall, and F1-score is **0.87**, **0.76**, and **0.78** respectively, which averages the performance across classes without taking class imbalance into account.
-
-- **Weighted Avg**: The weighted average for precision, recall, and F1-score is **0.85**, **0.82**, and **0.80** respectively, which accounts for class imbalance by weighting the average based on the support of each class.
-
-- **AUC-ROC**: The AUC-ROC score is **0.937**, which is close to 1, indicating that the model has a high level of discrimination ability between the positive and negative classes.
-
-- **Confusion Matrix**: The confusion matrix shows that out of **234** actual class 0 instances, **125** were correctly predicted as class 0, and **109** were incorrectly predicted as class 1. For class 1, out of **390** actual instances, **385** were correctly predicted, and only **5** were incorrectly predicted as class 0.
-
-Overall, the model shows a strong ability to identify class 1 instances but seems to be an issue with class 0, as indicated by the lower recall for class 0. The high AUC-ROC score suggests that the model's ability to distinguish between the classes is good. However, further investigation is needed to know why the model has a lower recall for class 0 
+Team Member 5: (Insert link to video) 
