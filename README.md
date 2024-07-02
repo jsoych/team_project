@@ -42,6 +42,6 @@ Shabiga Sahadevan: https://youtu.be/covsTJ8vPOk
 
 Jose Castellanos: https://youtu.be/2cYCd_pkuBs 
 
-Team Member 4: (Insert link to video) 
+Rehan Chaudhry:  https://youtu.be/ICupysneB1g 
 
 Team Member 5: (Insert link to video) 
