@@ -61,12 +61,12 @@ class DataGenerator(tf.keras.utils.PyDataset):
         super().__init__(**krwags)
         self.dir_path = dir_path
 
-        # Get labels and data
-        self.labels = os.listdir(dir_path)
+        # Get labels and label data
         if (data == 'auto'):
-            self.data = []
-            self.get_data()
+            self.labels = self.get_labels('auto')
+            self.data = self.__label_data()
         else:
+            self.labels = self.get_labels(data)
             self.data = data
 
         self.input_shape = input_shape
@@ -116,11 +116,33 @@ class DataGenerator(tf.keras.utils.PyDataset):
 
         return x_batch, y_batch
     
-    def get_data(self):
-        """ Gets and labels each image in the data directory. """
+    def get_labels(self, data=None):
+        """ Get the labels. """
+        if (data == 'auto'):
+            labels = []
+            # Scan data directory for labels
+            it = os.scandir(self.dir_path)
+            for dir_entry in it:
+                if dir_entry.is_dir():
+                    labels.append(dir_entry.name)
+            it.close()
+            return labels
+        elif (data):
+            labels = set()
+            for x, y in data:
+                labels.add(y)
+            return list(labels)
+        else:
+            return self.labels
+
+
+    def __label_data(self):
+        """ Labels each image path in the data directory. """
+        data = []
         for label in self.labels:
             paths = glob.glob(os.path.join(self.dir_path, label, "*.jpeg"))
-            self.data += [(path, label) for path in paths]
+            data += [(path, label) for path in paths]
+        return data
 
     def get_paths(self):
         """ Gets all the paths from data. """
