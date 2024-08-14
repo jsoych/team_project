@@ -73,7 +73,7 @@ The project highlighted the effectiveness of using data augmentation and pre-tra
 - Contributor: Entire team
 
 **August 8,2024**
-- Description:Pushed updates to the branch and demonstrated how data augmentation works.
+- Description: Pushed updates to the branch and demonstrated how data augmentation works.
 - Contributor: John Soychak
 
 **August 8,2024**
