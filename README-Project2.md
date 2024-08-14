@@ -125,7 +125,7 @@ The project highlighted the effectiveness of using data augmentation and pre-tra
 ---
 **John Soychak:** (Insert link to video) 
 
-**Shabiga Sahadevan:** 
+**Shabiga Sahadevan:** https://youtu.be/DFIKMci8xnI
 
 **Jose Castellanos:** (Insert link to video) 
 
