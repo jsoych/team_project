@@ -126,7 +126,7 @@ The project highlighted the effectiveness of using data augmentation and pre-tra
 
 **Shabiga Sahadevan:** https://youtu.be/DFIKMci8xnI
 
-**Jose Castellanos:** (Insert link to video) 
+**Jose Castellanos:** (https://youtu.be/j6ctqJoiiqk)
 
 **Rehan Chaudhry:**  (Insert link to video) 
 
