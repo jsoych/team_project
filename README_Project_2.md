@@ -114,8 +114,8 @@ The project highlighted the effectiveness of using data augmentation and pre-tra
 
 **August 14,2024** 
 - Description: Reviewed everyone's code with no errors found, created and pushed README-Project2.md for comprehensive project documentation. Created a new branch to replace the initial one, which had an empty README-Project2.md. Updated README-Project2.md to correct minor errors.
-- Contributor: Shabiga 
-
+- Contributor: Shabiga Sahadevan
+  
 **August 14,2024** 
 - Description: Reviewed the README-Project2.md file and uploaded video links. Completed final revisions and preparations before submission.
 - Contributor: Entire team
