@@ -109,7 +109,7 @@ The project highlighted the effectiveness of using data augmentation and pre-tra
 - Contributor: Rehan Chaudhry 
 
 **August 12,2024** 
-- Description: Code to mount Google drive and deep learning approach for clasifiying X-ray images as pneumonia or normal was pused to repo. 
+- Description: Code to mount Google drive and deep learning approach for clasifiying X-ray images as pneumonia or normal was pushed to repo. 
 - Contributor: Nabeela Zafar 
 
 **August 14,2024** 
