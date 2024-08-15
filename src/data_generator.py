@@ -56,7 +56,7 @@ class DataGenerator(tf.keras.utils.PyDataset):
                 batches of data.
             encoder: If encoder is set to one_hot, a one hot encoding scheme
                 is fitted with the labels found in the data directory.
-                Otherwise, an object encoder.
+                Otherwise, a fitted encoder object with transform method.
         """
         super().__init__(**krwags)
         self.dir_path = dir_path
