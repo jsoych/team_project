@@ -117,13 +117,8 @@ The project highlighted the effectiveness of using data augmentation and pre-tra
 - Contributor: Shabiga 
 
 **August 14,2024** 
-- Description: Added final touches before submission.
+- Description: Reviewed the README-Project2.md file and uploaded video links. Completed final revisions and preparations before submission.
 - Contributor: Entire team
-
-**August 14,2024** 
-- Description: Reviewed the README-Project2.md file and uploaded video links 
-- Contributor: Entire team
-
 
 **Team members Reflections and Insights**
 ---
