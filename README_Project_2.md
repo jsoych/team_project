@@ -122,11 +122,11 @@ The project highlighted the effectiveness of using data augmentation and pre-tra
 
 **Team members Reflections and Insights**
 ---
-**John Soychak:** (Insert link to video) 
+**John Soychak:** https://youtu.be/BbZNGAUvtAg
 
 **Shabiga Sahadevan:** https://youtu.be/DFIKMci8xnI
 
-**Jose Castellanos:** (https://youtu.be/j6ctqJoiiqk)
+**Jose Castellanos:** https://youtu.be/j6ctqJoiiqk
 
 **Rehan Chaudhry:**  (Insert link to video) 
 
