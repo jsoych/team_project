@@ -36,12 +36,12 @@ Finally, our project attempted to use machine learning approaches to automate pn
 
 **Team members Reflections and Insights**
 ---
-Team Member 1: (Insert link to video) 
+John Soychak: https://youtu.be/pMBDIsxf26M
 
-Team Member 2: (Insert link to video) 
+Shabiga Sahadevan: https://youtu.be/covsTJ8vPOk
 
-Team Member 3: (Insert link to video) 
+Jose Castellanos: https://youtu.be/2cYCd_pkuBs 
 
-Team Member 4: (Insert link to video) 
+Rehan Chaudhry:  https://youtu.be/ICupysneB1g 
 
 Team Member 5: (Insert link to video) 
