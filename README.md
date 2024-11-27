@@ -1,2 +1,2 @@
-## Team Project
-Here within lies the contents of a readme file.
+## Summary
+This project aims to enhance the classification accuracy of chest X-ray images for detecting pneumonia using advanced deep learning techniques. We utilized a combination of data augmentation methods and a pre-trained deep learning model to improve robustness and generalization. Data augmentation included transformations such as horizontal flipping, rotation, zooming, and color adjustments to increase the diversity of training images and mitigate overfitting.
