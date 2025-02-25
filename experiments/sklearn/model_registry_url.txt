@@ -1,0 +1,1 @@
+postgresql://postgres:classifier@10.0.0.218:5432/model_registry

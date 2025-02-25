@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: test
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      # Test default configuration
+      - image: jsoychak/experiment-sklearn
+        name: default-config
+        env:
+        - name: RESULTS_URL_FILE
+          value: "results_url_file"
+        volumeMounts:
+        - name: results-url
+          mountPath: "/src"
+          readOnly: true
+        - name: default-config
+          mountPath: "/src"
+          readOnly: true
+        - name: data
+          mountPath: "/data"
+          readOnly: true
+        resources: {}
+      # Test model name
+      - image: jsoychak/experiment-sklearn
+        name: model-name
+        env:
+        - name: RESULTS_URL_FILE
+          value: results_url_file
+        volumeMounts:
+        - name: results-url
+          mountPath: "/src"
+          readOnly: true
+        - name: model-name
+          mountPath: "/src"
+          readOnly: true
+        - name: data
+          mountPath: "/data"
+          readOnly: true
+        resources: {}
+      restartPolicy: Never
+      volumes:
+        - name: results-url
+          secret:
+            secretName: results-url
+        - name: default-config
+          configMap:
+            name: test-cm
+            items:
+            - key: "default-config.json"
+              path: "config.json"
+        - name: model-name
+          configMap:
+            name: test-cm
+            items:
+            - key: "model-name.json"
+              path: "config.json"
+        - name: data
+        # Fill in details please
+status: {}

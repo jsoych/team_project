@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: test
+data:
+  default-config.json: |-
+    {
+        "name": "test_default_config",
+        "results_table": "test_results"
+    }
+  model-name.json: |-
+    {
+        "name": "test_model_name",
+        "model_name": "LDA",
+        "results_table": "test_results"
+    }

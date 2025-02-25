@@ -29,11 +29,7 @@ X_test = sm.tools.tools.add_constant(X_test)
 
 # Fit the logistic model
 logit_mod = sm.Logit(Y,X)
-logit_res = logit_mod.fit(
-    method="bfgs",
-    maxiter=100,
-    skip_hessian=True
-)
+logit_res = logit_mod.fit(method="bfgs", maxiter=100, skip_hessian=True)
 
 # Predict probabilities for test data
 Y_pred = logit_mod.predict(logit_res.params,X_test)

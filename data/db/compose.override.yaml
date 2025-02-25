@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  
+  model-registry:
+    container_name: model-registry
+    image: postgres:15.5-bullseye
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${MODEL_REGISTRY_DB}
+    volumes:
+      - model-registry:/var/lib/postgres/data
+    ports:
+      - "5432:5432"
+
+  results:
+    container_name: results
+    image: postgres:15.5-bullseye
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${RESULTS_DB}
+    volumes:
+      - results:/var/lib/postgres/data
+    ports:
+      - "5433:5432"
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:8.3
+    restart: always
+    env_file: .env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5051:80"
+
+volumes:
+  model-registry:
+  results:
