@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  creationTimestamp: null
-  name: results-url
-data:
-  results_url_file: cG9zdGdyZXNxbDovL3Bvc3RncmVzOmNsYXNzaWZpZXJAMTAuMC4wLjIxODo1NDMzL3Jlc3VsdHM=
