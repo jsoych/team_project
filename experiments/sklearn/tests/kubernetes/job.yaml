@@ -10,16 +10,16 @@ spec:
     spec:
       containers:
       # Test default configuration
-      - image: jsoychak/experiment-sklearn:testing
-        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json"]
+      - image: jsoychak/experiment-sklearn
+        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json" ]
         name: default-config
         env:
-        - name: RESULTS_URL_FILE
-          value: "/secrets/results_url_file"
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: results_url
         volumeMounts:
-        - name: results-url
-          mountPath: "/secrets"
-          readOnly: true
         - name: default-config
           mountPath: "/config.d"
           readOnly: true
@@ -28,16 +28,16 @@ spec:
           readOnly: true
         resources: {}
       # Test model name
-      - image: jsoychak/experiment-sklearn:testing
-        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json"]
+      - image: jsoychak/experiment-sklearn
+        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json" ]
         name: model-name
         env:
-        - name: RESULTS_URL_FILE
-          value: "/secrets/results_url_file"
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: results_url
         volumeMounts:
-        - name: results-url
-          mountPath: "/secrets"
-          readOnly: true
         - name: model-name
           mountPath: "/config.d"
           readOnly: true
@@ -47,9 +47,6 @@ spec:
         resources: {}
       restartPolicy: Never
       volumes:
-        - name: results-url
-          secret:
-            secretName: results-url
         - name: default-config
           configMap:
             name: test

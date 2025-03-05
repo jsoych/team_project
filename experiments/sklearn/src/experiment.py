@@ -1,9 +1,11 @@
 import os
+import json
 import pandas as pd
 import database
 import models
 import scorer
 
+from hashlib import sha256
 from get_logger import get_logger
 from sacred import Experiment
 
@@ -21,10 +23,7 @@ def cfg():
     train_path = '/data/train_data.csv'
     test_path = '/data/test_data.csv'
     results_table = 'results'
-
-    # Get results database url
-    with open(os.getenv('RESULTS_URL_FILE')) as f:
-        results_url = f.read()
+    results_url = os.getenv('RESULTS_URL')
 
 @ex.capture
 def load_data(path, seed, sample=False, frac=None):
@@ -36,18 +35,19 @@ def load_data(path, seed, sample=False, frac=None):
     return df.to_numpy(), y.to_numpy()
 
 @ex.capture
-def save_results(results, name, results_table, results_url):
+def save_results(results, id, name, results_table, results_url):
     ''' Saves the results to the database '''
+    results['id'] = id
     results['name'] = name
     results_df = pd.DataFrame(
         results,
         index=None,
-        columns=['name','roc_auc','accuracy','precision','recall']
+        columns=['id','name','roc_auc','accuracy','precision','recall']
     )
     database.df_to_sql(results_df,results_table,results_url)
 
 @ex.automain
-def main(model_name, train_path, test_path, _log):
+def main(model_name, train_path, test_path, _log, _run):
     ''' Run the experiment. '''
     _log.info(f'Runinng the experiment')
 
@@ -79,6 +79,12 @@ def main(model_name, train_path, test_path, _log):
     results = scorer.evaluate(model,X_test,y_test)
     _log.debug(f'results: {results}')
 
+    # Create experiement id
+    config = json.dumps(_run.config)
+    id = sha256(config.encode()).hexdigest()
+    _log.debug(f'config: {config}')
+    _log.debug(f'id: {id}')
+    
     # Save results to results database
     _log.info('Saving model results')
-    save_results(results)
+    save_results(results,id)
