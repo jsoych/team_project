@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: test
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      # Test default configuration
+      - image: jsoychak/experiment-sklearn
+        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json" ]
+        name: default-config
+        env:
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: results_url
+        volumeMounts:
+        - name: default-config
+          mountPath: "/config.d"
+          readOnly: true
+        - name: data
+          mountPath: "/data"
+          readOnly: true
+        resources: {}
+      # Test model name
+      - image: jsoychak/experiment-sklearn
+        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json" ]
+        name: model-name
+        env:
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: results_url
+        volumeMounts:
+        - name: model-name
+          mountPath: "/config.d"
+          readOnly: true
+        - name: data
+          mountPath: "/data"
+          readOnly: true
+        resources: {}
+      restartPolicy: Never
+      volumes:
+        - name: default-config
+          configMap:
+            name: test
+            items:
+            - key: "default-config.json"
+              path: "config.json"
+        - name: model-name
+          configMap:
+            name: test
+            items:
+            - key: "model-name.json"
+              path: "config.json"
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+status: {}

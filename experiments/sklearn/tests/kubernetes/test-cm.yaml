@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: test
+data:
+  default-config.json: |-
+    {
+        "name": "kube_default_config",
+        "results_table": "test_results"
+    }
+  model-name.json: |-
+    {
+        "name": "kube_model_name",
+        "model_name": "LDA",
+        "results_table": "test_results"
+    }

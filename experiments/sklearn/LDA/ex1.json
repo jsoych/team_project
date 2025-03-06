@@ -1,0 +1,5 @@
+{
+    "name": "lda_experiment_1",
+    "model_name": "LDA",
+    "seed": 42
+}

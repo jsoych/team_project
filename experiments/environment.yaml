@@ -1,0 +1,13 @@
+name: experiment
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python
+  - pandas
+  - numpy
+  - sqlalchemy
+  - python-dotenv
+  - sacred
+  - pyyaml
+  - psycopg2

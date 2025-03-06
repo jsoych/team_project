@@ -169,7 +169,11 @@ cython_debug/
 # Windows
 Thumbs.db
 
+# Logging
+logs/
+
 data/raw/chest_xray/
 data/raw/chest-xray-pneumonia.zip
+data/processed/data_1/
 data/processed/data_2/
 data/processed/data_3/

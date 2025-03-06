@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  
+  model-registry:
+    container_name: model-registry
+    image: postgres:15.5-bullseye
+
+  results:
+    container_name: results
+    image: postgres:15.5-bullseye
