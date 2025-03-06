@@ -56,4 +56,78 @@ The project successfully demonstrated that data augmentation and pre-trained mod
 
 **Conclusion**
 ---
-The project highlighted the effectiveness of using data augmentation and pre-trained models in enhancing the classification of chest X-ray images. Despite achieving high accuracy in training, attention must be given to improving validation and test performance. Future work will focus on addressing the identified issues and exploring additional techniques to enhance model robustness and generalization.
+The project highlighted the effectiveness of using data augmentation and pre-trained models in enhancing the classification of chest X-ray images. Despite achieving high accuracy in training, attention must be given to improving validation and test performance. Future work will focus on addressing the identified issues and exploring additional techniques to enhance model robustness and generalization
+
+**Project Log**
+---
+**August 6,2024**
+- Description: The team met to decide on using the Project 1 dataset for Project 2, discussing the integration of new machine learning techniques 
+- Contributor: Entire team  
+
+**August 7,2024**
+- Description: Created the data generator and updated environment variables. Developed a summary method and improved data labeling.
+- Contributor: John Soychak
+
+**August 7,2024**
+- Description: Reviewed and checked that the data generator works with no issues.
+- Contributor: Entire team
+
+**August 8,2024**
+- Description: Pushed updates to the branch and demonstrated how data augmentation works.
+- Contributor: John Soychak
+
+**August 8,2024**
+- Description: Asked questions about data augmentation during the demo, which helped clarify the process for the team.
+- Contributor: Jose Castellas 
+
+**August 8,2024**
+- Description: The team followed along to the data augmentation demonstration and tested it out as well on their own. 
+- Contributor: Entire team 
+
+**August 9,2024**
+- Description: Pushed out data generator demo.
+- Contributor: John Soychak
+
+**August 9,2024**
+- Description: Looked over data generator demo 
+- Contributor: Entire team 
+
+**August 10,2024**
+- Description: Added a Colab demo that downloads the dataset from Kaggle and retrieves the data generator from GitHub. Token for the GitHub API is available in Slack.
+- Contributor: John Soychak
+
+**August 10,2024** 
+- Description: Looked over Colab demo. 
+- Contributor: Entire team 
+
+**August 11,2024** 
+- Description: Deep learning approach to classify X-ray images as pneumonia or normal was pushed to repo. Data augmentation was used as part of the process to improve the model.
+- Contributor: Rehan Chaudhry 
+
+**August 12,2024**
+- Description: Uploaded files related to the deep learning approach and documentation.
+- Contributor: Rehan Chaudhry 
+
+**August 12,2024** 
+- Description: Code to mount Google drive and deep learning approach for clasifiying X-ray images as pneumonia or normal was pushed to repo. 
+- Contributor: Nabeela Zafar 
+
+**August 14,2024** 
+- Description: Reviewed everyone's code with no errors found, created and pushed README-Project2.md for comprehensive project documentation. Created a new branch to replace the initial one, which had an empty README-Project2.md. Updated README-Project2.md to correct minor errors.
+- Contributor: Shabiga Sahadevan
+  
+**August 14,2024** 
+- Description: Reviewed the README-Project2.md file and uploaded video links. Completed final revisions and preparations before submission.
+- Contributor: Entire team
+
+**Team members Reflections and Insights**
+---
+**John Soychak:** https://youtu.be/BbZNGAUvtAg
+
+**Shabiga Sahadevan:** https://youtu.be/DFIKMci8xnI
+
+**Jose Castellanos:** https://youtu.be/j6ctqJoiiqk
+
+**Rehan Chaudhry:**  (Insert link to video) 
+
+**Nabeela Zafar:** (Insert link to video) 
