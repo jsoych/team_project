@@ -1,3 +1,5 @@
+import pickle
+
 from sacred import Ingredient
 from get_logger import get_logger
 
@@ -40,3 +42,11 @@ def get_model(name,_log):
         model = KNeighborsClassifier()
 
     return model
+
+def serialize_model(model):
+    ''' Serializes the model for storage and returns it. '''
+    return pickle.dumps(model)
+
+def deserialize_model(model):
+    ''' Deserializes the model and returns it. '''
+    return pickle.loads(model)

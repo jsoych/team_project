@@ -6,7 +6,7 @@ import models
 import scorer
 
 from hashlib import sha256
-from get_logger import get_logger
+from logger import get_logger
 from sacred import Experiment
 
 # Create experiment
@@ -22,6 +22,8 @@ def cfg():
     model_name = 'logistic_regression'
     train_path = '/data/train_data.csv'
     test_path = '/data/test_data.csv'
+    models_table = 'sklearn'
+    registry_url = os.getenv('REGISTRY_URL')
     results_table = 'results'
     results_url = os.getenv('RESULTS_URL')
 
@@ -35,8 +37,12 @@ def load_data(path, seed, sample=False, frac=None):
     return df.to_numpy(), y.to_numpy()
 
 @ex.capture
-def save_results(results, id, name, results_table, results_url):
-    ''' Saves the results to the database '''
+def save_results(results, id, name, results_table, results_url, _log) -> None:
+    ''' Saves the results to the database If the url is None, save_results
+        returns None. '''
+    if (results_url == None):
+        return None
+    
     results['id'] = id
     results['name'] = name
     results_df = pd.DataFrame(
@@ -45,6 +51,24 @@ def save_results(results, id, name, results_table, results_url):
         columns=['id','name','roc_auc','accuracy','precision','recall']
     )
     database.df_to_sql(results_df,results_table,results_url)
+
+@ex.capture
+def save_model(model, id, name, models_table, registry_url, _log) -> None:
+    ''' Saves the model to the registry. If the url is None, save_model 
+        returns None. '''
+    if (registry_url == None):
+        return None
+    
+    df = pd.DataFrame(
+        {
+            'id': [id],
+            'name': [name],
+            'model': [models.serialize_model(model)]
+        },
+        index=None,
+        columns=['id','name','model']
+    )
+    database.df_to_sql(df,models_table,registry_url)
 
 @ex.automain
 def main(model_name, train_path, test_path, _log, _run):
@@ -86,5 +110,9 @@ def main(model_name, train_path, test_path, _log, _run):
     _log.debug(f'id: {id}')
     
     # Save results to results database
-    _log.info('Saving model results')
+    _log.info('Saving experiment results to database')
     save_results(results,id)
+
+    # Save the model to the model registry
+    _log.info('Saving model to registry')
+    save_model(model,id)
