@@ -1,0 +1,151 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: lda-test
+spec:
+  template:
+    spec:
+      containers:
+      - image: jsoychak/experiment-sklearn
+        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json" ]
+        name: experiment
+        env:
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: results_url
+        volumeMounts:
+        - name: config
+          mountPath: "/config.d"
+          readOnly: true
+        - name: data
+          mountPath: "/data"
+          readOnly: true
+        resources: {}
+      restartPolicy: Never
+      volumes:
+        - name: config
+          configMap:
+            name: big-test
+            items:
+            - key: "lda"
+              path: "config.json"
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+status: {}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: qda-test
+spec:
+  template:
+    spec:
+      containers:
+      - image: jsoychak/experiment-sklearn
+        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json" ]
+        name: experiment
+        env:
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: results_url
+        volumeMounts:
+        - name: config
+          mountPath: "/config.d"
+          readOnly: true
+        - name: data
+          mountPath: "/data"
+          readOnly: true
+        resources: {}
+      restartPolicy: Never
+      volumes:
+        - name: config
+          configMap:
+            name: big-test
+            items:
+            - key: "qda"
+              path: "config.json"
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+status: {}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nb-test
+spec:
+  template:
+    spec:
+      containers:
+      - image: jsoychak/experiment-sklearn
+        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json" ]
+        name: experiment
+        env:
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: results_url
+        volumeMounts:
+        - name: config
+          mountPath: "/config.d"
+          readOnly: true
+        - name: data
+          mountPath: "/data"
+          readOnly: true
+        resources: {}
+      restartPolicy: Never
+      volumes:
+        - name: config
+          configMap:
+            name: big-test
+            items:
+            - key: "nb"
+              path: "config.json"
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+status: {}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: knn-test
+spec:
+  template:
+    spec:
+      containers:
+      - image: jsoychak/experiment-sklearn
+        command: [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "/config.d/config.json" ]
+        name: experiment
+        env:
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: results_url
+        volumeMounts:
+        - name: config
+          mountPath: "/config.d"
+          readOnly: true
+        - name: data
+          mountPath: "/data"
+          readOnly: true
+        resources: {}
+      restartPolicy: Never
+      volumes:
+        - name: config
+          configMap:
+            name: big-test
+            items:
+            - key: "knn"
+              path: "config.json"
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+status: {}
