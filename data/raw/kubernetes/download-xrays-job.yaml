@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: download-xrays
+spec:
+  template:
+    spec:
+      containers:
+      - name: download
+        image: jsoychak/download-xrays
+        env:
+        - name: RAW_DATA_DIR
+          value: /data/raw
+        volumeMounts:
+        - name: kaggle-api-token
+          mountPath: /root/.kaggle
+        - name: xray-data
+          mountPath: /data/raw
+      restartPolicy: Never
+      volumes:
+      - name: kaggle-api-token
+        secret:
+          secretName: kaggle-api-token
+      - name: xray-data
+        persistentVolumeClaim:
+          claimName: xray-data
