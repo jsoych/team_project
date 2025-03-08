@@ -1,7 +1,7 @@
 import pickle
 
 from sacred import Ingredient
-from get_logger import get_logger
+from logger import get_logger
 
 # Create ingredient
 ingredient = Ingredient('models')

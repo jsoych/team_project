@@ -1,17 +1,50 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   name: test
 data:
-  default-config.json: |-
+  logistic_regression.json: |-
     {
-        "name": "kube_default_config",
-        "results_table": "test_results"
+      "name": "vgg19_logistic_regression",
+      "model_name": "LDA",
+      "train_path": "/data/vgg19/train_data.csv",
+      "test_path": "/data/vgg19/test_data.csv",
+      "models_table": "test_sklearn",
+      "results_table": "test_results"
     }
-  model-name.json: |-
+  lda.json: |-
     {
-        "name": "kube_model_name",
-        "model_name": "LDA",
-        "results_table": "test_results"
+      "name": "xception_lda",
+      "model_name": "LDA",
+      "train_path": "/data/xception/train_data.csv",
+      "test_path": "/data/xception/test_data.csv",
+      "models_table": "test_sklearn",
+      "results_table": "test_results"
+    }
+  qda.json: |-
+    {
+      "name": "xception_QDA",
+      "model_name": "QDA",
+      "train_path": "/data/xception/train_data.csv",
+      "test_path": "/data/xception/test_data.csv",
+      "models_table": "test_sklearn",
+      "results_table": "test_results"
+    }
+  nb.json: |-
+    {
+      "name": "resNet50_NB",
+      "model_name": "NB",
+      "train_path": "/data/resNet50/train_data.csv",
+      "test_path": "/data/resNet50/test_data.csv",
+      "models_table": "test_sklearn",
+      "results_table": "test_results"
+    }
+  knn.json: |-
+    {
+      "name": "resNet50_KNN",
+      "model_name": "KNN",
+      "train_path": "/data/resNet50/train_data.csv",
+      "test_path": "/data/resNet50/test_data.csv",
+      "models_table": "test_sklearn",
+      "results_table": "test_results"
     }
