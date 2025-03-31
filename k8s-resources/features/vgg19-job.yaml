@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vgg19-features
+spec:
+  template:
+    spec:
+      containers:
+      - name: features
+        image: jsoychak/features-vgg19
+        env:
+        - name: RAW_DATA_DIR
+          value: /data/raw
+        - name: PROCESSED_DATA_DIR
+          value: /data/processed
+        volumeMounts:
+        - name: xray-data
+          mountPath: /data/raw
+          readOnly: true
+        - name: processed-data
+          mountPath: /data/processed
+      restartPolicy: Never
+      volumes:
+      - name: processed-data
+        persistentVolumeClaim:
+          claimName: processed-data
+      - name: xray-data
+        persistentVolumeClaim:
+          claimName: xray-data
+          

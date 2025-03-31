@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-default
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: default
+        image: busybox:1.37.0
+        command: ["test", "-f", "/data/train_data.csv", "&&", "test", "-f", "/data/test_data.csv"]
+      containers:
+      - name: experiment
+        image: jsoychak/experiment-sklearn
+        volumeMounts:
+        - name: data
+          mountPath: /data
+          readOnly: true
+      restartPolicy: OnFailure
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: processed-data

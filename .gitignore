@@ -177,6 +177,3 @@ data/raw/chest-xray-pneumonia.zip
 data/processed/data_1/
 data/processed/data_2/
 data/processed/data_3/
-
-# Kubernetes secrets
-**-secret.yaml

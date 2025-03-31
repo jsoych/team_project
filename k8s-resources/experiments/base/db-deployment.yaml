@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: experiments-db
+  name: experiments-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: experiments-db
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: experiments-db
+    spec:
+      containers:
+      - image: postgres:15.5-bullseye
+        name: postgres
+        envFrom:
+        - secretRef:
+            name: postgres
+        ports:
+        - containerPort: 5432
+        resources: {}
+      volumes:
+      - name: data
+        emptyDir:
+          sizeLimit: 1Gi
+status: {}
