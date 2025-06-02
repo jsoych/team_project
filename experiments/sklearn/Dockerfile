@@ -7,5 +7,8 @@ RUN conda install -n experiment scikit-learn
 COPY src src
 WORKDIR /src
 
+# Add permissons to run script
+RUN chmod +x run.sh
+
 # Run experiment
-CMD [ "conda", "run", "-n", "experiment", "python", "experiment.py", "with", "config.json"]
+CMD [ "conda", "run", "-n", "experiment", "python", "experiment.py" ]

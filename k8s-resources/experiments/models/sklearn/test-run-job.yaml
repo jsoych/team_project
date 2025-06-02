@@ -1,0 +1,72 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-run
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: res-net50
+        image: busybox:1.37.0
+        command: ["test", "-d", "/data/resNet50"]
+        volumeMounts:
+        - name: data
+          mountPath: /data
+          readOnly: true
+      - name: vgg19
+        image: busybox:1.37.0
+        command: ["test", "-d", "/data/vgg19"]
+        volumeMounts:
+        - name: data
+          mountPath: /data
+          readOnly: true
+      - name: xception
+        image: busybox:1.37.0
+        command: ["test", "-d", "/data/xception"]
+        volumeMounts:
+        - name: data
+          mountPath: /data
+          readOnly: true
+      - name: logs
+        image: busybox:1.37.0
+        command: ["test", "-d", "/logs"]
+        volumeMounts:
+        - name: logs
+          mountPath: /logs
+          readOnly: false
+      containers:
+      - name: experiment
+        image: jsoychak/experiment-sklearn
+        command: [ "./run.sh" ]
+        env:
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: url
+        - name: REGISTRY_URL
+          valueFrom:
+            secretKeyRef:
+              name: registry-url
+              key: url
+        volumeMounts:
+        - name: configs
+          mountPath: /configs
+          readOnly: true
+        - name: data
+          mountPath: /data
+          readOnly: true
+        - name: logs
+          mountPath: /logs
+          readOnly: false
+      restartPolicy: OnFailure
+      volumes:
+      - name: configs
+        configMap:
+          name: test
+      - name: data
+        persistentVolumeClaim:
+          claimName: processed-data
+      - name: logs
+        persistentVolumeClaim:
+          claimName: logs

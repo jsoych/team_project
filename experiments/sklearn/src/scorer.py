@@ -1,7 +1,7 @@
 from sacred import Ingredient
 from sklearn.metrics import roc_auc_score, accuracy_score, precision_score
 from sklearn.metrics import recall_score, make_scorer
-from get_logger import get_logger
+from logger import get_logger
 
 # Create ingredient
 ingredient = Ingredient('scorer')

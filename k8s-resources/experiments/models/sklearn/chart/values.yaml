@@ -1,0 +1,8 @@
+# Default results and registry secret
+secrets:
+  results:
+    name: results-url
+    key: url
+  registry:
+    name: registry-url
+    key: url    

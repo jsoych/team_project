@@ -15,6 +15,7 @@ ex = Experiment(
     ingredients=[database.ingredient,models.ingredient,scorer.ingredient]
 )
 ex.logger = get_logger(__name__)
+ex.logger.setLevel(os.getenv('LOG_LEVEL', default='INFO'))
 
 @ex.config
 def cfg():

@@ -1,0 +1,7 @@
+experiment:
+  image: jsoychak/experiment-sklearn
+  parameters:
+    name: vgg19_qda
+    model_name: QDA
+    train_path: /data/data_1/train_data.csv
+    test_path: /data/data_1/test_data.csv
