@@ -1,0 +1,9 @@
+experiment:
+  image: jsoychak/experiment-sklearn
+  parameters:
+    name: test_chart
+    model_name: LDA
+    train_path: /data/data_1/train_data.csv
+    test_path: /data/data_1/test_data.csv
+    models_table: test_sklearn
+    results_table: test_results

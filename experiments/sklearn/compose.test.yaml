@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  default-config:
+    image: jsoychak/experiment-sklearn:testing
+    environment:
+      - RESULTS_URL_FILE=/run/secrets/results-url
+    secrets:
+      - results-url
+    configs:
+      - source: default-config
+        target: /src/config.json
+    volumes:
+      - /Users/leejahsprock/cs/DSI/team_project/data/processed/data_1:/data
+      - /Users/leejahsprock/cs/DSI/team_project/logs:/logs
+    restart: on-failure
+  model-name:
+    image: jsoychak/experiment-sklearn:testing
+    environment:
+      - RESULTS_URL_FILE=/run/secrets/results-url
+    secrets:
+      - results-url
+    configs:
+      - source: model-name
+        target: /src/config.json
+    volumes:
+      - /Users/leejahsprock/cs/DSI/team_project/data/processed/data_1:/data
+      - /Users/leejahsprock/cs/DSI/team_project/logs:/logs
+    restart: on-failure
+secrets:
+  results-url:
+    external: True
+configs:
+  default-config:
+    external: True
+  model-name:
+    external: True
