@@ -1,0 +1,7 @@
+name: experiment
+channels:
+  - defaults
+dependencies:
+  - cuda-version=12.4=hbda6634_3
+  - tensorflow=2.17.0=cuda124py312ha1f05a4_200
+
