@@ -116,4 +116,4 @@ def main(model_name, train_path, test_path, _log, _run):
 
     # Save the model to the model registry
     _log.info('Saving model to registry')
-    save_model(model,id)
+    scalar test loss (if the model has a single output and no metrics) or list of scalars (if the model has multiple outputs and/or metrics). The attribute model.metrics_names will give you the display labels for the scalar outputs. ave_model(model,id)

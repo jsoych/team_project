@@ -2,6 +2,6 @@ name: experiment
 channels:
   - defaults
 dependencies:
-  - cuda-version=12.4=hbda6634_3
-  - tensorflow=2.17.0=cuda124py312ha1f05a4_200
-
+  - pillow=11.1.0
+  - scikit-learn=1.6.1
+  - tensorflow-gpu=2.17.0

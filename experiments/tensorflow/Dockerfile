@@ -1,13 +1,12 @@
-FROM continuumio/miniconda3
+FROM experiment:gpu
 
-# set up environment
+# Update experiment environment
+WORKDIR /root/experiment
+ENV CONDA_OVERRIDE_CUDA=12.8.1
 ADD environment.yaml environment.yaml
-RUN conda env create -f environment.yaml
-
-# make data and model directories
-RUN mkdir data logs src
-
-# copy assets into src
+RUN /root/miniconda3/bin/conda env update -f environment.yaml 
 COPY src src
 
-CMD ["conda", "-n", "experiment", "run", "python", "/src/main.py"]
+# Run experiment
+WORKDIR src
+CMD ["/root/miniconda3/bin/conda", "run", "-n", "experiment", "python", "experiment.py"]

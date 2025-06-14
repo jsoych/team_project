@@ -169,9 +169,17 @@ cython_debug/
 # Windows
 Thumbs.db
 
-# Logging
-logs/
+# Configs
+experiments/tensorflow/configs/*
 
+# Data
 data/raw/chest_xray/
 data/raw/chest-xray-pneumonia.zip
 data/processed/**
+
+# Logging
+logs/
+experiments/tensorflow/logs/*
+
+# Registry
+registry/**
