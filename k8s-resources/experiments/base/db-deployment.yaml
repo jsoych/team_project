@@ -4,6 +4,7 @@ metadata:
   labels:
     app: experiments-db
   name: experiments-db
+  namespace: team-project
 spec:
   replicas: 1
   selector:
@@ -23,9 +24,12 @@ spec:
             name: postgres
         ports:
         - containerPort: 5432
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/postgres/data
         resources: {}
       volumes:
       - name: data
-        emptyDir:
-          sizeLimit: 1Gi
+        persistentVolumeClaim:
+          claimName: experiments-db-claim
 status: {}

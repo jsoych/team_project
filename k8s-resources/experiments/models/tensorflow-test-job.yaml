@@ -9,7 +9,7 @@ spec:
       creationTimestamp: null
     spec:
       containers:
-      - image: jsoychak/experiment-tensorflow
+      - image: jsoychak/experiment-tensorflow:test
         name: tensorflow-test
         env:
         - name: RESULTS_URL
@@ -27,18 +27,23 @@ spec:
           mountPath: /mnt/data
         - name: configs
           mountPath: /mnt/configs
+        - name: experiment
+          mountPath: /root/experiment/configs
         - name: registry
           mountPath: /mnt/registry
         resources: {}
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: raw-data
+          claimName: raw-data-claim 
       - name: configs
         configMap:
-          name: logger
+          name: logger-cm
+      - name: experiment
+        configMap:
+          name: tensorflow-test-cm
       - name: registry
         persistentVolumeClaim:
-          claimName: registry
+          claimName: registry-claim
       restartPolicy: Never
 status: {}
