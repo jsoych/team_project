@@ -8,7 +8,7 @@ from keras.metrics import AUC, CategoricalAccuracy
 from keras.optimizers import Adam
 
 
-def get_layer(name, kwargs, trainable, _log):
+def get_layer(name, kwargs, trainable, logger):
     ''' Returns a new layer by name '''
     layer = None
     if name == 'res-net50':
@@ -35,12 +35,12 @@ def get_layer(name, kwargs, trainable, _log):
     elif name == 'input':
         layer = Input(**kwargs)
     else:
-        _log.info(f'Error: {name} layer is unknown')
+        logger.info(f'Error: {name} layer is unknown')
         return None
     layer.trainable = trainable
     return layer
 
-def get_preproc_func(name, _log):
+def get_preproc_func(name, logger):
     ''' Returns a preprocessing function by name '''
     if name == 'res-net50':
         from keras.applications.resnet50 import preprocess_input
@@ -52,17 +52,17 @@ def get_preproc_func(name, _log):
         from keras.applications.xception import preprocess_input
         return preprocess_input
     else:
-        _log.info(f'Error: {name} preprocessing function is unknown')
+        logger.info(f'Error: {name} preprocessing function is unknown')
     return None
 
-def model_builder(name, arch, _log):
+def model_builder(name, arch, logger):
     ''' Builds and returns a model '''
-    _log.debug(f'arch: {arch}')
+    logger.debug(f'arch: {arch}')
     model = Sequential(name=name)
     for layer in arch['layers']:
-        new_layer = get_layer(layer['name'], layer['args'], layer['trainable'], _log)
+        new_layer = get_layer(layer['name'], layer['args'], layer['trainable'], logger)
         if new_layer == None:
-            _log.info(f'Error: model_builder unable to build model') 
+            logger.info(f'Error: model_builder unable to build model') 
             return None
         model.add(new_layer)
     model.compile(

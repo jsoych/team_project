@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sklearn-test
+  namespace: team-project
+data:
+  experiment.yaml: |
+    name: sklearn_kube_test
+    model_name: LDA
+    train_path: /mnt/data/vgg19/train_data.csv
+    test_path: /mnt/data/vgg19/test_data.csv
+    registry_table: test_model
+    results_table: test_results

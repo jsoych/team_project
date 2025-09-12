@@ -3,10 +3,20 @@ kind: PersistentVolume
 metadata:
   name: logs-volume
 spec:
-  storageClassName: manual
   capacity:
-    storage: 1Gi
+    storage: 8Gi
+  claimRef:
+    name: logs-claim
+    namespace: team-project
   accessModes:
   - ReadWriteMany
-  hostPath:
-    path: /mnt/data/logs
+  local:
+    path: /home/jsoychak/cs/team_project/logs
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values: ["worker0"]
+  volumeMode: Filesystem

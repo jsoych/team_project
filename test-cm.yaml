@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  experiment.yaml: |
+    name: kube_me_a_dinner_sandwich
+    model:
+      name: logistic_regression
+      preprocFunc: standard
+    train_path: /mnt/data/vgg19/train_data.csv
+    test_path: /mnt/data/vgg19/test_data.csv
+    models_table: test_models
+    results_table: test_results
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: test-cm
+  namespace: team-project

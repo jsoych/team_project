@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mlflow-tracking-server
+  name: mlflow-tracking-server
+  namespace: team-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow-tracking-server
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mlflow-tracking-server
+    spec:
+      containers:
+      - image: ghcr.io/mlflow/mlflow:v3.1.1
+        name: tracking-server
+        ports:
+        - containerPort: 8885
+        command: ["mlflow", "server", "--host", "0.0.0.0", "--port", "8885"]
+        volumeMounts:
+        - name: registry
+          mountPath: /mlruns
+      volumes:
+      - name: registry
+        persistentVolumeClaim:
+          claimName: registry-claim
+status: {}

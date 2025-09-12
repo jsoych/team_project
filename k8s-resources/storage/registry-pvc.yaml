@@ -9,4 +9,3 @@ spec:
       storage: 32Gi
   accessModes:
   - ReadWriteMany
-  volumeMode: Filesystem

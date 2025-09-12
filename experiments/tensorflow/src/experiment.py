@@ -53,13 +53,13 @@ _log.info('Creating the model')
 model = models.model_builder(config['model']['name'], config['model']['arch'], _log)
 model.summary()
 
-def df_to_sql(df: DataFrame, table, url, _log, schema=None, if_exists="append"):
+def df_to_sql(df: DataFrame, table_name, db_url):
     ''' Inserts the dataframe into the database. '''
-    _log.info(f'Inserting dataframe into {table} table')
-    _log.debug(f'Trying to connect to database with {url}')
-    engine = create_engine(url)
+    _log.info(f'Inserting dataframe into {table_name}')
+    _log.debug(f'Trying to connect to database with {db_url}')
+    engine = create_engine(db_url)
     with engine.connect() as con:
-        df.to_sql(table, con, schema, if_exists, index=False)
+        df.to_sql(table_name, con, if_exists='append', index=False)
     return None
 
 def create_experiment_id(config):
@@ -73,7 +73,7 @@ def create_experiment_id(config):
     h.update(config['results_table'].encode())
     return h.hexdigest()
 
-def save_results(results, experiment_id, experiment_name, table, _log):
+def save_results(results, experiment_id, experiment_name, table_name):
     ''' Saves the results to the database. If the RESULTS_URL is none,
         save_results returns None. '''
     url = os.getenv('RESULTS_URL')
@@ -87,10 +87,10 @@ def save_results(results, experiment_id, experiment_name, table, _log):
         index=None,
         columns=['id', 'name', 'roc_auc', 'accuracy'],
     )
-    df_to_sql(results_df, table, url, _log)
+    df_to_sql(results_df, table_name, url)
     return None
 
-def save_model(model, experiment_id, name, table, _log):
+def save_model(model, experiment_id, experiment_name, table_name):
     ''' Saves the model to the registry. If the REGISTRY_URL is none,
         save_model returns None. '''
     url = os.getenv('REGISTRY_URL')
@@ -100,14 +100,14 @@ def save_model(model, experiment_id, name, table, _log):
     _log.debug(path)
     model.save(path)
     model_df = DataFrame(
-        data={'id': [experiment_id], 'name': [name], 'path': [path]},
+        data={'id': [experiment_id], 'name': [experiment_name], 'path': [path]},
         index=None,
         columns=['id', 'name', 'path']
     )
-    df_to_sql(model_df, table, url, _log)
+    df_to_sql(model_df, table_name, url)
     return None
 
-if __name__ == '__main__':
+def main():
     ''' Run the experiment '''
     _log.info('Running experiment')
 
@@ -115,22 +115,26 @@ if __name__ == '__main__':
     experiment_id = create_experiment_id(config)
     _log.debug(f'experiment_id: {experiment_id}')
     
-    # Fitting the model
+    # Fit the model
+    _log.info('Fitting the model')
     model.fit(
         x=train_gen,
         validation_data=val_gen,
         epochs=config['epochs']
     )
 
-    # Evaluating the model
+    # Evaluate the model
+    _log.info('Evaluting the model')
     results = model.evaluate(test_gen, return_dict=True)
-    print(results)
+    _log.info(f'results: {results}')
     
     # Save results to results database
     _log.info('Saving results to results database')
-    save_results(results, experiment_id, config['name'], config['results_table'], _log)
+    save_results(results, experiment_id, config['name'], config['results_table'])
 
     # Save model to registry database
     _log.info('Saving model to registry database')
-    save_model(model, experiment_id, config['name'], config['registry_table'], _log)
+    save_model(model, experiment_id, config['name'], config['registry_table'])
 
+if __name__ == '__main__':
+    main()

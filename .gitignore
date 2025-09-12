@@ -170,6 +170,7 @@ cython_debug/
 Thumbs.db
 
 # Configs
+experiments/sklearn/configs/*
 experiments/tensorflow/configs/*
 
 # Data
@@ -179,6 +180,7 @@ data/processed/**
 
 # Logging
 logs/
+experiments/sklearn/logs/*
 experiments/tensorflow/logs/*
 
 # Registry

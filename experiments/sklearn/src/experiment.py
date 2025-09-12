@@ -1,119 +1,184 @@
 import os
-import json
-import pandas as pd
-import database
+import logging
+import logging.config
+import yaml
+import mlflow
 import models
-import scorer
 
 from hashlib import sha256
-from logger import get_logger
-from sacred import Experiment
+from mlflow.models import infer_signature
+from pandas import DataFrame, read_csv
+from sklearn.metrics import roc_auc_score, accuracy_score, precision_score
+from sklearn.metrics import recall_score, make_scorer
+from sqlalchemy import create_engine
 
-# Create experiment
-ex = Experiment(
-    name='pneumonia_classifier',
-    ingredients=[database.ingredient,models.ingredient,scorer.ingredient]
-)
-ex.logger = get_logger(__name__)
-ex.logger.setLevel(os.getenv('LOG_LEVEL', default='INFO'))
+# Configure logger
+with open(os.getenv('LOGGER_CONFIG', default='logger.yaml'), 'rb') as f:
+    config = yaml.safe_load(f)
+logging.config.dictConfig(config)
 
-@ex.config
-def cfg():
-    name = 'logistic_regression'
-    model_name = 'logistic_regression'
-    train_path = '/data/train_data.csv'
-    test_path = '/data/test_data.csv'
-    models_table = 'sklearn'
-    registry_url = os.getenv('REGISTRY_URL')
-    results_table = 'results'
-    results_url = os.getenv('RESULTS_URL')
+# Create logger
+_log = logging.getLogger(__name__)
+_log.setLevel(os.getenv('LOG_LEVEL', default='INFO'))
 
-@ex.capture
-def load_data(path, seed, sample=False, frac=None):
-    ''' Loads data from path, and returns X and y. '''
-    df = pd.read_csv(path)
-    if sample:
-        df = df.sample(frac=frac,random_state=seed)
-    y = df.pop('y')
-    return df.to_numpy(), y.to_numpy()
+# Load experiment configuration
+with open(os.getenv('EXPERIMENT_CONFIG', default='../configs/experiment.yaml'), 'rb') as f:
+    config = yaml.safe_load(f)
+    _log.debug(config)
 
-@ex.capture
-def save_results(results, id, name, results_table, results_url, _log) -> None:
-    ''' Saves the results to the database If the url is None, save_results
-        returns None. '''
-    if (results_url == None):
+def create_experiment_id(config):
+    ''' Creates an id from the experiment configuration. '''
+    h = sha256()
+    keys = ['name', 'train_path', 'test_path']
+    for k in keys:
+        h.update(config[k].encode())
+    
+    h.update(config['model']['name'].encode())
+
+    if ('preprocFunc' in config.keys()):
+        h.update(config['preprocFunc'].encode())
+    
+    return h.hexdigest()[:64]
+
+def load_data(data_path):
+    ''' Loads the data with the path, and returns X and y. '''
+    _log.debug(f'Trying to load data from {data_path}')
+    X = read_csv(data_path)
+    y = X.pop('y')
+    return X.to_numpy(), y.to_numpy()
+
+def df_to_sql(df: DataFrame, db_url, table_name):
+    ''' Inserts the dataframe into the database. '''
+    _log.debug(f'Trying to connect to the database with {db_url}')
+    engine = create_engine(db_url)
+    with engine.connect() as con:
+        df.to_sql(table_name, con, if_exists='append', index=False)
+    return None
+
+def get_model(config):
+    ''' Gets the model and returns it. '''
+    _log.debug(f'config: {config}')
+    model = models.build_model(config, _log)
+    return model
+
+def evaluate(model, X, y):
+    ''' Scores the binary classifier againts roc_auc, accuracy, precision and
+        recall, and returns the results. '''
+    metrics = {
+        'roc_auc': roc_auc_score,
+        'accuracy': accuracy_score,
+        'precision': precision_score,
+        'recall': recall_score
+    }
+    results = {}
+    for name, metric in metrics.items():
+        results[name] = [make_scorer(metric)(model,X,y)]
+    return results
+
+
+def save_results(results, experiment_id, experiment_name, table_name):
+    ''' Saves the results to the database and returns None. If the
+        environment variable RESULTS_URL is none, then save_results returns
+        none. '''
+    if (results_url := os.getenv('RESULTS_URL')):
+        _log.debug(f'Saving results to {results_url}')
+        results['id'] = experiment_id
+        results['name'] = experiment_name
+        results_df = DataFrame(
+            results,
+            index=None,
+            columns=['id', 'name', 'roc_auc', 'accuracy', 'precision', 'recall']
+        )
+        df_to_sql(results_df, results_url, table_name)
+    return None
+
+def save_model(model, X, experiment_id, experiment_name, table_name=None):
+    ''' Saves the model to the registry. If the environment variable
+        MODEL_URL is set, then save_model inserts the path to the model
+        within the registry to the database. '''
+    # Save model to remote registry
+    if (remote_registry := os.getenv('REGISTRY_URI')):
+        _log.debug(f'Saving model to {remote_registry}')
+        mlflow.set_tracking_uri(remote_registry)
+        mlflow.set_experiment(experiment_name)
+        with mlflow.start_run():
+            # Log the model hyperparameters
+            mlflow.log_params(model.get_params())
+
+            # Infer the model signature
+            signature = infer_signature(X, model.predict(X))
+
+            # Log the model
+            model_info = mlflow.sklearn.log_model(
+                sk_model=model,
+                signature=signature,
+                input_example=X
+            )
+    else:
         return None
     
-    results['id'] = id
-    results['name'] = name
-    results_df = pd.DataFrame(
-        results,
-        index=None,
-        columns=['id','name','roc_auc','accuracy','precision','recall']
-    )
-    database.df_to_sql(results_df,results_table,results_url)
-
-@ex.capture
-def save_model(model, id, name, models_table, registry_url, _log) -> None:
-    ''' Saves the model to the registry. If the url is None, save_model 
-        returns None. '''
-    if (registry_url == None):
-        return None
+    # Save model id to models database
+    if (models_url := os.getenv('MODELS_URL')):
+        _log.debug(f'Saving model_id to {models_url}')
+        df_to_sql(
+            DataFrame(
+                data={
+                    'id': [experiment_id],
+                    'name': [experiment_name],
+                    'model_id': [model_info.model_id]
+                },
+                index=None,
+                columns=['id', 'name', 'model_id']
+            ),
+            models_url,
+            table_name
+        )
+    return None
     
-    df = pd.DataFrame(
-        {
-            'id': [id],
-            'name': [name],
-            'model': [models.serialize_model(model)]
-        },
-        index=None,
-        columns=['id','name','model']
-    )
-    database.df_to_sql(df,models_table,registry_url)
-
-@ex.automain
-def main(model_name, train_path, test_path, _log, _run):
+def main():
     ''' Run the experiment. '''
-    _log.info(f'Runinng the experiment')
+    _log.info(f'Runinng experiment')
 
-    # Loading training data
+    # Create experiement id
+    experiment_id = create_experiment_id(config)
+    _log.debug(f'experiment_id: {experiment_id}')
+
+    # Load training data
     _log.info(f'Loading training data')
-    _log.debug(f'train_path: {train_path}')
-    X, y = load_data(train_path)
+    X, y = load_data(config['train_path'])
     _log.debug(f'X.shape: {X.shape}')
     _log.debug(f'y.shape: {y.shape}')
 
-    # Getting the model
-    _log.info(f'Getting model')
-    _log.debug(f'model name: {model_name}')
-    model = models.get_model(model_name)
-
-    # Fitting the model
-    _log.info(f'Fitting model')
-    model.fit(X,y)
-
-    # Loading test data
+    # Load test data
     _log.info(f'Loading test data')
-    _log.debug(f'test_path: {test_path}')
-    X_test, y_test = load_data(test_path)
+    X_test, y_test = load_data(config['test_path'])
     _log.debug(f'X_test.shape: {X_test.shape}')
     _log.debug(f'y_test.shape: {y_test.shape}')
 
-    # Evaluating the model
-    _log.info(f'Evaluating the model')
-    results = scorer.evaluate(model,X_test,y_test)
+    # Get model
+    _log.info(f'Getting model')
+    model = get_model(config['model'])
+
+    # Fit model
+    _log.info(f'Fitting model')
+    model.fit(X,y)
+
+    # Evaluating model
+    _log.info(f'Evaluating model')
+    results = evaluate(model, X_test, y_test)
     _log.debug(f'results: {results}')
 
     # Create experiement id
-    config = json.dumps(_run.config)
-    id = sha256(config.encode()).hexdigest()
-    _log.debug(f'config: {config}')
-    _log.debug(f'id: {id}')
+    experiment_id = create_experiment_id(config)
+    _log.debug(f'experiment_id: {experiment_id}')
     
     # Save results to results database
-    _log.info('Saving experiment results to database')
-    save_results(results,id)
+    _log.info('Saving results to database')
+    save_results(results, experiment_id, config['name'], config['results_table'])
 
     # Save the model to the model registry
     _log.info('Saving model to registry')
-    scalar test loss (if the model has a single output and no metrics) or list of scalars (if the model has multiple outputs and/or metrics). The attribute model.metrics_names will give you the display labels for the scalar outputs. ave_model(model,id)
+    save_model(model, X_test, experiment_id, config['name'], config['models_table'])
+
+if __name__ == '__main__':
+    main()

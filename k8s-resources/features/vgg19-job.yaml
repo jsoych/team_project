@@ -24,7 +24,6 @@ spec:
       - name: processed-data
         persistentVolumeClaim:
           claimName: processed-data
-      - name: xray-data
+      - name: raw-data
         persistentVolumeClaim:
-          claimName: xray-data
-          
+          claimName: raw-data

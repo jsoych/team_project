@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: processed-data-claim
+  name: db-claim
   namespace: team-project
 spec:
   accessModes:
   - ReadWriteMany
   resources:
     requests:
-      storage: 8Gi
+      storage: 16Gi

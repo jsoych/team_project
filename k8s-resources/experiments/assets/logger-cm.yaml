@@ -1,0 +1,29 @@
+apiVersion: v1
+data:
+  logger.yaml: |
+    version: 1
+    formatters:
+      terse:
+        format: '%(levelname)s - %(message)s'
+      verbose:
+        format: '%(asctime)s %(name)s %(filename)s %(lineno)d %(funcName)s %(levelname)s "%(message)s"'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        level: INFO
+        formatter: terse
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        level: DEBUG
+        formatter: verbose
+        filename: '../logs/experiment.log'
+    loggers:
+      __main__:
+        level: DEBUG
+        handlers: [console, file]
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: logger-cm
+  namespace: team-project

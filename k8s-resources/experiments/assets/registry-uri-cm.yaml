@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  uri: http://mlflow-tracking-server:8885
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: registry-uri
+  namespace: team-project
