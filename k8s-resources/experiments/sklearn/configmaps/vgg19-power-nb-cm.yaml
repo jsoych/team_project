@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  experiment.yaml: |
+    model:
+      name: NB
+      preprocFunc: power
+    models_table: sklearn_models
+    name: vgg19_power_NB
+    results_table: sklearn_results
+    test_path: /mnt/data/vgg19/test_data.csv
+    train_path: /mnt/data/vgg19/train_data.csv
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: vgg19-power-nb-cm
+  namespace: team-project

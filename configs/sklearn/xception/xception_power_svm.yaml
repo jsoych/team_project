@@ -1,0 +1,8 @@
+model:
+  name: svm
+  preproc_func: power
+models_table: sklearn_models
+name: xception_power_svm
+results_table: sklearn_results
+test_path: /mnt/data/xception/test_data.csv
+train_path: /mnt/data/xception/train_data.csv

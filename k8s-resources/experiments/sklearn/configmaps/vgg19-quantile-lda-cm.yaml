@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  experiment.yaml: |
+    model:
+      name: LDA
+      preprocFunc: quantile
+    models_table: sklearn_models
+    name: vgg19_quantile_LDA
+    results_table: sklearn_results
+    test_path: /mnt/data/vgg19/test_data.csv
+    train_path: /mnt/data/vgg19/train_data.csv
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: vgg19-quantile-lda-cm
+  namespace: team-project

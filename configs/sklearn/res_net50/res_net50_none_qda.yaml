@@ -1,0 +1,7 @@
+model:
+  name: qda
+models_table: sklearn_models
+name: res_net50_none_qda
+results_table: sklearn_results
+test_path: /mnt/data/res_net50/test_data.csv
+train_path: /mnt/data/res_net50/train_data.csv

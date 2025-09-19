@@ -1,0 +1,8 @@
+model:
+  name: lda
+  preproc_func: power
+models_table: sklearn_models
+name: res_net50_power_lda
+results_table: sklearn_results
+test_path: /mnt/data/res_net50/test_data.csv
+train_path: /mnt/data/res_net50/train_data.csv

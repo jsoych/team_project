@@ -1,0 +1,8 @@
+model:
+  name: lda
+  preproc_func: quantile
+models_table: sklearn_models
+name: vgg19_quantile_lda
+results_table: sklearn_results
+test_path: /mnt/data/vgg19/test_data.csv
+train_path: /mnt/data/vgg19/train_data.csv

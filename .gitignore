@@ -177,6 +177,7 @@ experiments/tensorflow/configs/*
 data/raw/chest_xray/
 data/raw/chest-xray-pneumonia.zip
 data/processed/**
+data/db/**
 
 # Logging
 logs/

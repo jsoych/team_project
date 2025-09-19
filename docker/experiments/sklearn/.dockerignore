@@ -1,0 +1,6 @@
+configs/
+logs/
+src/__pycache__/
+run_test.sh
+src/dev.env
+src/docker.env

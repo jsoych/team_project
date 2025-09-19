@@ -1,0 +1,8 @@
+model:
+  name: lda
+  preproc_func: standard
+models_table: test_models
+name: vgg16_standard_lda
+results_table: test_results
+test_path: /mnt/data/vgg16/test_data.csv
+train_path: /mnt/data/vgg16/train_data.csv

@@ -1,0 +1,7 @@
+model:
+  name: nb
+models_table: test_models
+name: vgg16_none_nb
+results_table: test_results
+test_path: /mnt/data/vgg16/test_data.csv
+train_path: /mnt/data/vgg16/train_data.csv

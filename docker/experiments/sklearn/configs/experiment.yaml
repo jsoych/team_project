@@ -1,0 +1,10 @@
+name: test
+model:
+  name: svm
+  preprocFunc: min-max
+  params:
+    model__max_iter: 1000
+train_path: /home/jsoychak/cs/team_project/data/processed/vgg19/train_data.csv
+test_path: /home/jsoychak/cs/team_project/data/processed/vgg19/test_data.csv
+models_table: test_models
+results_table: test_results

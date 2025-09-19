@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  experiment.yaml: |
+    model:
+      name: NB
+    models_table: sklearn_models
+    name: vgg19_none_NB
+    results_table: sklearn_results
+    test_path: /mnt/data/vgg19/test_data.csv
+    train_path: /mnt/data/vgg19/train_data.csv
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: vgg19-none-nb-cm
+  namespace: team-project

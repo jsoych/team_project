@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  experiment.yaml: |
+    model:
+      name: QDA
+      preprocFunc: standard
+    models_table: sklearn_models
+    name: resNet50_standard_QDA
+    results_table: sklearn_results
+    test_path: /mnt/data/resNet50/test_data.csv
+    train_path: /mnt/data/resNet50/train_data.csv
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: resnet50-standard-qda-cm
+  namespace: team-project

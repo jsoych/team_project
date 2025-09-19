@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  experiment.yaml: |
+    model:
+      name: logistic_regression
+      preprocFunc: power
+    models_table: sklearn_models
+    name: vgg16_power_logistic_regression
+    results_table: sklearn_results
+    test_path: /mnt/data/vgg16/test_data.csv
+    train_path: /mnt/data/vgg16/train_data.csv
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: vgg16-power-log-reg-cm
+  namespace: team-project

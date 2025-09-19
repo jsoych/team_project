@@ -1,0 +1,8 @@
+model:
+  name: nb
+  preproc_func: min_max
+models_table: sklearn_models
+name: vgg16_min_max_nb
+results_table: sklearn_results
+test_path: /mnt/data/vgg16/test_data.csv
+train_path: /mnt/data/vgg16/train_data.csv

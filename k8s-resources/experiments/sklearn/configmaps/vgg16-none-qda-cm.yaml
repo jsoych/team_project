@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  experiment.yaml: |
+    model:
+      name: QDA
+    models_table: sklearn_models
+    name: vgg16_none_QDA
+    results_table: sklearn_results
+    test_path: /mnt/data/vgg16/test_data.csv
+    train_path: /mnt/data/vgg16/train_data.csv
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: vgg16-none-qda-cm
+  namespace: team-project

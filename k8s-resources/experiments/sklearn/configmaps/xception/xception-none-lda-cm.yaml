@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  experiment.yaml: |
+    model:
+      name: LDA
+    models_table: sklearn_models
+    name: xception_none_LDA
+    results_table: sklearn_results
+    test_path: /mnt/data/xception/test_data.csv
+    train_path: /mnt/data/xception/train_data.csv
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: xception-none-lda-cm
+  namespace: team-project

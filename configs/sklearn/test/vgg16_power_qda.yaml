@@ -1,0 +1,8 @@
+model:
+  name: qda
+  preproc_func: power
+models_table: test_models
+name: vgg16_power_qda
+results_table: test_results
+test_path: /mnt/data/vgg16/test_data.csv
+train_path: /mnt/data/vgg16/train_data.csv

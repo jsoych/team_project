@@ -1,0 +1,28 @@
+name: davy_demo
+model:
+  name: classifier
+  arch:
+    layers:
+    - name: res-net50
+      args:
+        name: res-net50
+        include_top: false
+        pooling: avg
+      trainable: false
+    - name: dense
+      args:
+        name: hidden
+        activation: 'relu'
+        units: 64
+      trainable: true
+    - name: dense
+      args:
+        name: output
+        activation: 'softmax'
+        units: 2
+      trainable: true
+  preproc_func: res-net50
+batch_size: 16
+epochs: 2
+results_table: test_results
+registry_table: test_tensorflow_models

@@ -1,6 +1,0 @@
-name: sklearn_kube_test
-model_name: LDA
-train_path: /data/vgg19/train_data.csv
-test_path: /data/vgg19/test_data.csv
-model_table: test_models
-results_table: test_results

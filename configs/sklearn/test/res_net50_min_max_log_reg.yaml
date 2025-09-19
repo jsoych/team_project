@@ -1,0 +1,8 @@
+model:
+  name: log_reg
+  preproc_func: min_max
+models_table: test_models
+name: res_net50_min_max_log_reg
+results_table: test_results
+test_path: /mnt/data/res_net50/test_data.csv
+train_path: /mnt/data/res_net50/train_data.csv

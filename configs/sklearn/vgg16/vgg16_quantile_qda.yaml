@@ -1,0 +1,8 @@
+model:
+  name: qda
+  preproc_func: quantile
+models_table: sklearn_models
+name: vgg16_quantile_qda
+results_table: sklearn_results
+test_path: /mnt/data/vgg16/test_data.csv
+train_path: /mnt/data/vgg16/train_data.csv

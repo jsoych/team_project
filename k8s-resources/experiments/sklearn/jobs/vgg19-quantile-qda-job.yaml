@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vgg19-quantile-qda-job
+  namespace: team-project
+spec:
+  template:
+    spec:
+      containers:
+      - name: experiment
+        image: localhost:32000/experiment-sklearn:v1
+        env:
+        - name: LOG_LEVEL
+          value: DEBUG
+        - name: REGISTRY_URI
+          valueFrom:
+            configMapKeyRef:
+              name: registry-uri
+              key: uri
+        - name: MODELS_URL
+          valueFrom:
+            secretKeyRef:
+              name: models-url
+              key: url
+        - name: RESULTS_URL
+          valueFrom:
+            secretKeyRef:
+              name: results-url
+              key: url
+        volumeMounts:
+        - name: configs
+          mountPath: /root/experiment/configs
+          readOnly: true
+        - name: data
+          mountPath: /mnt/data
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: configs
+        configMap:
+          name: vgg19-quantile-qda-cm
+      - name: data
+        persistentVolumeClaim:
+          claimName: processed-data-claim

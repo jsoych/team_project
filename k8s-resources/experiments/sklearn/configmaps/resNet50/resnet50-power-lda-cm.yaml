@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  experiment.yaml: |
+    model:
+      name: LDA
+      preprocFunc: power
+    models_table: sklearn_models
+    name: resNet50_power_LDA
+    results_table: sklearn_results
+    test_path: /mnt/data/resNet50/test_data.csv
+    train_path: /mnt/data/resNet50/train_data.csv
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: resnet50-power-lda-cm
+  namespace: team-project
