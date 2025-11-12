@@ -1,14 +1,14 @@
 # ParaK8s
 
 ParaK8s is a framework for organizing and running **large-scale machine learning experiments** on multi-node Kubernetes clusters.  
-Its core philosophy is that **all experiments are elements from a very large parameterized function space**: each experiment is fully described by a configuration file specifying data pipelines, model architecture, logging, results tracking, and model registry.
+Its core philosophy is that **all experiments are trajectories within a large function space**: each experiment is fully described by a configuration file specifying data pipelines, model architecture, logging, results tracking, and model registry.
 
 ---
 
 ## Core Tenets
 
-1. **Experiments as Parameterized Functions**  
-   Every experiment is defined by a configuration file that completely describes its behavior and dependencies.
+1. **Experiments as Configurations**  
+   Every experiment is uniquely determined by its configuration file, model parameters, and datapipelines.
 
 2. **Reproducibility**  
    All experiments are reproducible via configuration files, Docker images, and version-controlled datasets.
@@ -21,9 +21,6 @@ Its core philosophy is that **all experiments are elements from a very large par
 
 5. **Experiment Tracking & Artifact Management**  
    Full integration with **MLflow**, databases (Postgres), and model registries ensures experiments are fully auditable.
-
-6. **Device-Agnostic Preprocessing**  
-   Data normalization and preprocessing functions are designed to work consistently across devices and datasets.
 
 ---
 
