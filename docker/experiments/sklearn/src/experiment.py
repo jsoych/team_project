@@ -185,7 +185,7 @@ def save_model(model, X, experiment_id, experiment_name, table_name=None, logger
     
 def run(config, logger):
     ''' Run the experiment. '''
-    logger.info(f'Runinng experiment')
+    logger.info(f'Runinng experiment {config['name']}')
     logger.debug(config)
 
     # Create experiement id
@@ -237,9 +237,33 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
     logger.setLevel(os.getenv('LOG_LEVEL', default='INFO'))
 
-    # Load experiment config
-    with open(os.getenv('EXPERIMENT_CONFIG', default='../configs/experiment.yaml'), 'rb') as f:
-        config = yaml.safe_load(f)
+    # Get experiment config
+    config_dir = os.getenv('CONFIGS_DIR', '../configs')
+    logger.debug(f'main: config_dir: {config_dir}')
 
-    # Run experiment
-    run(config, logger)
+    with os.scandir(config_dir) as dir:
+        for ent in dir:
+            config_path = os.path.join(config_dir, ent.name)
+            logger.debug(config_path)
+
+            # Get extension type
+            _, ext = os.path.splitext(config_path)
+            
+            # Check ext type
+            if (ext == '.yaml'):
+                # Load experiment config
+                from yaml import safe_load
+                with open(config_path, 'rb') as file:
+                    config = safe_load(file)
+
+                # Run experiment
+                run(config, logger)
+            
+            elif (ext == '.json'):
+                # Load experiment config
+                from json import load
+                with open(config_path, 'rb') as file:
+                    config = load(file)
+        
+                # Run experiment
+                run(config, logger)

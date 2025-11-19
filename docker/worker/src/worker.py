@@ -2,12 +2,13 @@
 import os
 import time
 
+from job import Job
 from task import Task
 
 class Worker:
-    def __init__(self, status = 'not-assigned'):
-        self.status = status
-        self.task: Task = None
+    def __init__(self, name):
+        self.status = 'not-assigned'
+        self.job = Job(name)
         pass
 
     def getStatus(self):
@@ -21,52 +22,45 @@ class Worker:
         if (worker.status != 'working'):
             return
         
-        if (self.task.getStatus() != 'running'):
+        if (self.job.getStatus() != 'running'):
             worker.status = 'not-working'
 
         return
+    
+    def addTask(self, task):
+        ''' Adds a task to the job to the worker's job. '''
+        self.job.addTask(task)
+        return
 
-    def run(self, task):
-        ''' Runs the task '''
+    def run(self):
+        ''' Runs the job and returns the status of the old job. '''
         # check worker status
         if (self.status == 'not-assigned'):
-            old_task = None
-            self.bind(task)
+            job_status = None
         elif (self.status == 'not-working'):
-            old_task = self.unbind()
-            self.bind(task)
-            return old_task
-        else:
-            return None
+            job_status = self.job.getStatus()
         
-        # run task
-        self.task.run()
+        self.job.run()
         self.status = 'working'
-        return old_task
-    
-    def bind(self, task):
-        ''' Binds the task to the worker. '''
-        self.task = task
-        return
-    
-    def unbind(self, task) -> Task:
-        ''' Unbinds the task from the worker and returns it. '''
-        old_task = self.task
-        return old_task
+        return job_status
 
-    def getTaskStatus(self):
+    def getJobStatus(self):
         ''' Returns the status of the worker's task. '''
         if (self.status == 'not-assigned'):
             return None
         
-        return self.task.getStatus()
+        return self.job.getStatus()
 
 
 if __name__ == '__main__':
     from redis import Redis
+    from kubernetes.config import load_incluster_config
 
     r = Redis(host=os.getenv('REDIS_HOST'), port=os.getenv('REDIS_PORT'))
-    worker = Worker()
+    load_incluster_config()
+
+    worker = Worker('danny')
+    
     while True:
         # update worker status
         worker.updateStatus()
@@ -77,18 +71,20 @@ if __name__ == '__main__':
             continue
 
         # get task
-        _, raw = r.brpop(["experiments:ready"], timeout=1)
+        reply = r.brpop(["experiments:ready"], timeout=1)
 
-        if (task := Task().decode(raw)):
-            # handle decoding error
-            r.rpush('experiments:not-ready', raw)
-
-        # run task
-        if (old_task := worker.run(task) == None):
+        # check raw
+        if (reply == None):
             continue
 
-        # check old task status
-        if (old_task.getStatus() == 'incomplete'):
-            r.lpush('experiments:incomplete', old_task.encode())
-        elif (old_task.getStatus() == 'completed'):
-            r.lpush('experiments:completed', old_task.encode())
+        # unpack reply
+        _, raw = reply
+
+        # create task
+        task = Task('danny', str(raw))
+        
+        # add task to worker
+        worker.addTask(task)
+
+        # run job
+        old_job_status = worker.run()

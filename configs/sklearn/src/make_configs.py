@@ -1,5 +1,6 @@
 import os
 import random
+import json
 import yaml
 
 preproc_funcs = ['none', 'standard', 'min_max', 'power', 'quantile']
@@ -53,6 +54,9 @@ if __name__ == '__main__':
             
             with open(os.path.join(test_dir, f'{config['name']}.yaml'), 'w') as file:
                 yaml.safe_dump(config, file)
+
+            with open(os.path.join(test_dir, f'{config['name']}.json'), 'w') as file:
+                json.dump(config, file)
     
     # Make configs directory
     configs_dir = os.path.join(target_dir, data)

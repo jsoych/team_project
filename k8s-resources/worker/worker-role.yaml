@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: worker-role
+  namespace: team-project
+rules:
+- apiGroups:
+  - ""
+  - batch
+  resources:
+  - configmaps
+  - jobs
+  verbs:
+  - create
+  - get

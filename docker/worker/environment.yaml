@@ -1,0 +1,8 @@
+name: worker
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - redis==3.5.3
+  - pip:
+      - kubernetes==34.1.0

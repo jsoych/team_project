@@ -1,74 +1,88 @@
-import json
-import time
-
-from kubernetes import client, config
-
-config.load_config()
-v1 = client.CoreV1Api()
+from kubernetes.client import CoreV1Api, V1ConfigMap
+from kubernetes.client.exceptions import ApiException
 
 class Task:
-    def __init__(self, data=None):
-        self.cm = v1.create_namespaced_config_map(
-            namespace='team-project',
-            body=client.V1ConfigMap(
-                api_version='v1',
-                metadata={
-                    'name': 'test-cm',
-                    'labels': {
-                        'stage': 'dev',
-                        'delete': 'true'
-                    }
-                },
-                data=data
+    def __init__(self, name, config, logger=None):
+        self.name = name
+        self.config = config
+        self.__logger = logger
+        try:
+            if (self.__logger is not None):
+                self.__logger.debug('creating configmap')
+            self.cm = CoreV1Api().create_namespaced_config_map(
+                namespace='team-project',
+                body=V1ConfigMap(
+                    api_version='v1',
+                    metadata={
+                        'name': name,
+                        'labels': {
+                            'stage': 'dev',
+                            'delete': 'true'
+                        }
+                    },
+                    data={'experiment.json': config}
+                )
             )
-        )
+        
+        except ApiException as err:
+            if (self.__logger is not None):
+                self.__logger.debug(f'status: {err.status} reason: {err.reason}')
+            self.cm = None
         return
-
-    def getStatus(self):
-        ''' Returns the status of the task. '''
-        return self.status
     
-    def setStatus(self, status):
-        ''' Sets the status of the task. '''
-        self.status = status
-        return
+    def get_status(self):
+        ''' Gets the status of the configmap. '''
+        try:
+            resp = CoreV1Api().get_api_resources()
+        except ApiException as err:
+            print(err)
+            resp = None
 
-    def decode(self, raw):
-        ''' Decodes the raw task configuration and returns True. Otherwise,
-            returns False. '''
-        # unmarshal the task
-        if (obj := json.loads(raw) == None):
-            return False
-        
-        # check if the object has the needed keys
-        for k in ['id']:
-            if (k not in obj.keys()):
-                return False
-        
-        # decode obj
-        self.id = obj['id']
-        return True
-        
-    def encode(self):
-        ''' Encodes the task into its raw configuration. '''
-        obj = {
-            'id': self.id,
-            'status': self.status
-        }
-        return json.dumps(obj).encode()
+        return resp
+
     
-    def apply(self, data=None):
-        ''' Apply changes to task. '''
-        v1.patch_namespaced_config_map(
-            name=self.cm.metadata.name,
-            namespace=self.cm.metadata.namespace,
-            body={'data': data}
-        )
-        return
-
+    def delete(self):
+        try:
+            if(self.__logger is not None):
+                self.__logger.debug('deleting configmap')
+            CoreV1Api().delete_namespaced_config_map(
+                name=self.name, namespace='team-project'
+            )
+        except ApiException as err:
+            if (self.__logger is not None):
+                self.__logger.debug(f'status: {err.status} reason: {err.reason}')
+            else:
+                print(err)
+    
+    def __del__(self):
+        try:
+            self.delete()
+        except Exception:
+            pass
+    
 if __name__ == '__main__':
-    import os
-    with open(os.getenv('EXPERIMENT_CONFIG'), 'r') as f:
-        data = f.read(-1)
+    import yaml
+
+    from logging import getLogger
+    from logging.config import dictConfig
+    from time import sleep
+    from kubernetes.config import load_config
+
+    with open('/home/jsoychak/cs/team_project/docker/worker/assets/logger.yaml', 'rb') as f:
+        config = yaml.safe_load(f)
+        dictConfig(config)
     
-    task = Task({'experiment.yaml': data})
+    logger = getLogger(__name__)
+
+    load_config()
+
+    task = Task('test', 'configuration', logger)
+    print(task.get_status())
+    sleep(5)
+
+    task.delete()
+    sleep(5)
+
+    task = Task('test', 'configuration', logger)
+    task = None
+    sleep(5)

@@ -1,0 +1,1 @@
+{"name": "vgg19_standard_log_reg", "train_path": "/mnt/data/vgg19/train_data.csv", "test_path": "/mnt/data/vgg19/test_data.csv", "models_table": "test_models", "results_table": "test_results", "model": {"name": "log_reg", "preproc_func": "standard"}}

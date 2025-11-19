@@ -1,29 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  creationTimestamp: null
-  labels:
-    app: lab
-  name: lab
+  # insert job name
   namespace: team-project
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: lab
-  strategy: {}
   template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: lab
-        delete: "true"
-        stage: dev
     spec:
       containers:
-      - image: busybox
-        name: busy
-        command: ["sleep", "36000"]
+      - name: experiment
+        image: localhost:32000/experiment-sklearn:test
+        imagePullPolicy: Always
         env:
         - name: LOG_LEVEL
           value: DEBUG
@@ -49,11 +35,14 @@ spec:
         - name: data
           mountPath: /mnt/data
           readOnly: true
+        - name: logs
+          mountPath: /root/experiment/logs
+      restartPolicy: Never
       volumes:
-      - name: configs
-        configMap:
-          name: test-cm
+      # insert configmap
       - name: data
         persistentVolumeClaim:
           claimName: processed-data-claim
-status: {}
+      - name: logs
+        persistentVolumeClaim:
+          claimName: logs-claim

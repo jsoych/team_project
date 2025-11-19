@@ -174,10 +174,7 @@ experiments/sklearn/configs/*
 experiments/tensorflow/configs/*
 
 # Data
-data/raw/chest_xray/
-data/raw/chest-xray-pneumonia.zip
-data/processed/**
-data/db/**
+data/**
 
 # Logging
 logs/
